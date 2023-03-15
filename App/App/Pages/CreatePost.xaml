@@ -1,0 +1,11 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App.Pages.CreatePost">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry x:Name="TitleEntry" Placeholder="Title" />
+            <Editor x:Name="DescriptionEntry" Placeholder="Description" />
+            <Button Text="Create" Clicked="CreateButton_Clicked" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

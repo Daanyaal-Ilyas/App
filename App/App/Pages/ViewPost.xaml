@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="App.Pages.ViewPost">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label x:Name="PostTitle" FontSize="Large" />
+            <Label x:Name="PostDescription" />
+            <Label x:Name="PostAuthor" />
+            <Label x:Name="TotalLikesLabel" />
+            <Label Text="Comments:" FontAttributes="Bold" />
+            <ListView x:Name="CommentsListView">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Vertical">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding AuthorName}"
+                                           FontAttributes="Italic"
+                                           HorizontalOptions="Start"
+                                           VerticalOptions="Center" />
+                                    <Label Text="{Binding Comment.Text}"
+                                           HorizontalOptions="Start"
+                                           VerticalOptions="Center" />
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Entry x:Name="NewCommentEntry" Placeholder="Write a comment..." />
+            <Button Text="Add Comment" Clicked="AddCommentButton_Clicked" />
+            <Button Text="Like / Unlike Post" Clicked="LikeButton_Clicked" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
