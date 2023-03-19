@@ -30,7 +30,7 @@ namespace App.Pages
             }
 
             // Check if the username is already taken
-            using (var db = new AppDbContext())
+            using (var db = new AppDatabase())
             {
                 var existingUser = db.Connection.Table<User>().FirstOrDefault(u => u.Username == UsernameEntry.Text);
                 if (existingUser != null)
@@ -49,7 +49,7 @@ namespace App.Pages
                 Password = PasswordEntry.Text
             };
 
-            using (var db = new AppDbContext())
+            using (var db = new AppDatabase())
             {
                 db.Connection.Insert(newUser);
             }

@@ -9,13 +9,13 @@ namespace App.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreatePost : ContentPage
     {
-        private User _user;
-        private byte[] _imageData;
+        private User users;
+        private byte[] imageData;
 
         public CreatePost(User user)
         {
             InitializeComponent();
-            _user = user;
+            users = user;
         }
 
         private async void ChooseImageButton_Clicked(object sender, EventArgs e)
@@ -28,10 +28,10 @@ namespace App.Pages
             if (result != null)
             {
                 var stream = await result.OpenReadAsync();
-                _imageData = new byte[stream.Length];
-                await stream.ReadAsync(_imageData, 0, _imageData.Length);
+                imageData = new byte[stream.Length];
+                await stream.ReadAsync(imageData, 0, imageData.Length);
 
-                PostImage.Source = ImageSource.FromStream(() => new MemoryStream(_imageData));
+                PostImage.Source = ImageSource.FromStream(() => new MemoryStream(imageData));
             }
         }
 
@@ -47,11 +47,11 @@ namespace App.Pages
             {
                 Title = TitleEntry.Text,
                 Description = DescriptionEditor.Text,
-                UserId = _user.Id,
-                ImageData = _imageData
+                UserId = users.Id,
+                ImageData = imageData
             };
 
-            using (var db = new AppDbContext())
+            using (var db = new AppDatabase())
             {
                 db.Connection.Insert(newPost);
             }

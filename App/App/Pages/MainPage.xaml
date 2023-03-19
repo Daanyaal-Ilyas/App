@@ -22,7 +22,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <SearchBar x:Name="PostSearchBar" Grid.Row="0" Text="{Binding SearchText}" Placeholder="Search posts..." SearchButtonPressed="PostSearchBar_SearchButtonPressed" />
+            <SearchBar x:Name="PostSearchBar" Grid.Row="0" Text="{Binding SearchText}" Placeholder="Search posts..." SearchButtonPressed="SearchButton_Clicked" />
             <StackLayout Grid.Row="1" Padding="10">
                 <ListView x:Name="PostsListView" ItemSelected="PostsListView_ItemSelected" SeparatorVisibility="Default" SeparatorColor="LightGray" RowHeight="75">
                     <ListView.ItemTemplate>

@@ -9,18 +9,18 @@ namespace App.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewPost : ContentPage
     {
-        private User _user;
-        private Post _post;
+        private User users;
+        private Post post;
 
         public ViewPost(int postId, User user)
         {
             InitializeComponent();
-            _user = user;
+            users = user;
             LoadPost(postId);
             LoadComments(postId);
 
             // If the current user is not the author of the post, hide the delete button
-            if (_post.UserId != _user.Id)
+            if (post.UserId != user.Id)
             {
                 DeletePostButton.IsVisible = false;
             }
@@ -28,20 +28,20 @@ namespace App.Pages
 
         private void LoadPost(int postId)
         {
-            using (var db = new AppDbContext())
+            using (var db = new AppDatabase())
             {
-                _post = db.Connection.Table<Post>().FirstOrDefault(p => p.Id == postId);
-                User postAuthor = db.Connection.Find<User>(_post.UserId);
+                post = db.Connection.Table<Post>().FirstOrDefault(p => p.Id == postId);
+                User postAuthor = db.Connection.Find<User>(post.UserId);
 
-                PostTitle.Text = _post.Title;
-                PostDescription.Text = _post.Description;
+                PostTitle.Text = post.Title;
+                PostDescription.Text = post.Description;
                 PostAuthor.Text = $"By {postAuthor.Name}";
 
-                int totalLikes = db.Connection.Table<Like>().Count(l => l.PostId == _post.Id);
+                int totalLikes = db.Connection.Table<Like>().Count(l => l.PostId == post.Id);
                 TotalLikesLabel.Text = $"{totalLikes} Likes";
 
                 // Set the text of the Like / Unlike Post button based on whether the current user has already liked the post or not
-                var existingLike = db.Connection.Table<Like>().FirstOrDefault(l => l.UserId == _user.Id && l.PostId == _post.Id);
+                var existingLike = db.Connection.Table<Like>().FirstOrDefault(l => l.UserId == users.Id && l.PostId == post.Id);
                 if (existingLike == null)
                 {
                     LikeButton.Text = "Like";
@@ -51,16 +51,16 @@ namespace App.Pages
                     LikeButton.Text = "Unlike";
                 }
 
-                if (_post.ImageData != null)
+                if (post.ImageData != null)
                 {
-                    PostImage.Source = ImageSource.FromStream(() => new MemoryStream(_post.ImageData));
+                    PostImage.Source = ImageSource.FromStream(() => new MemoryStream(post.ImageData));
                 }
             }
         }
 
         private void LoadComments(int postId)
         {
-            using (var db = new AppDbContext())
+            using (var db = new AppDatabase())
             {
                 var comments = db.Connection.Table<Comment>().Where(c => c.PostId == postId).ToList();
                 List<CommentWithAuthor> commentsWithAuthors = new List<CommentWithAuthor>();
@@ -86,20 +86,20 @@ namespace App.Pages
 
         private async void AddCommentButton_Clicked(object sender, EventArgs e)
         {
-            using (var db = new AppDbContext())
+            using (var db = new AppDatabase())
             {
                 var newComment = new Comment
                 {
                     Text = NewCommentEntry.Text,
-                    UserId = _user.Id,
-                    PostId = _post.Id
+                    UserId = users.Id,
+                    PostId = post.Id
                 };
 
                 db.Connection.Insert(newComment);
             }
 
             NewCommentEntry.Text = string.Empty;
-            LoadComments(_post.Id);
+            LoadComments(post.Id);
 
             await DisplayAlert("Success", "Comment added.", "OK");
         }
@@ -109,20 +109,20 @@ namespace App.Pages
 
             if (answer)
             {
-                using (var db = new AppDbContext())
+                using (var db = new AppDatabase())
                 {
                     // Delete post
-                    db.Connection.Delete(_post);
+                    db.Connection.Delete(   post);
 
                     // Delete likes for the post
-                    var likes = db.Connection.Table<Like>().Where(l => l.PostId == _post.Id).ToList();
+                    var likes = db.Connection.Table<Like>().Where(l => l.PostId == post.Id).ToList();
                     foreach (var like in likes)
                     {
                         db.Connection.Delete(like);
                     }
 
                     // Delete comments for the post
-                    var comments = db.Connection.Table<Comment>().Where(c => c.PostId == _post.Id).ToList();
+                    var comments = db.Connection.Table<Comment>().Where(c => c.PostId == post.Id).ToList();
                     foreach (var comment in comments)
                     {
                         db.Connection.Delete(comment);
@@ -137,16 +137,16 @@ namespace App.Pages
 
         private async void LikeButton_Clicked(object sender, EventArgs e)
         {
-            using (var db = new AppDbContext())
+            using (var db = new AppDatabase())
             {
-                var existingLike = db.Connection.Table<Like>().FirstOrDefault(l => l.UserId == _user.Id && l.PostId == _post.Id);
+                var existingLike = db.Connection.Table<Like>().FirstOrDefault(l => l.UserId == users.Id && l.PostId == post.Id);
 
                 if (existingLike == null)
                 {
                     var newLike = new Like
                     {
-                        UserId = _user.Id,
-                        PostId = _post.Id
+                        UserId = users.Id,
+                        PostId = post.Id
                     };
 
                     db.Connection.Insert(newLike);

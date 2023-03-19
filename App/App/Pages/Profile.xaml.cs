@@ -8,28 +8,28 @@ namespace App.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Profile : ContentPage
     {
-        private User _currentUser;
+        private User currentUser;
 
         public Profile(User user)
         {
             InitializeComponent();
-            _currentUser = user;
+            currentUser = user;
             LoadProfileData();
             LoadUserPosts();
         }
 
         private void LoadProfileData()
         {
-            NameLabel.Text = $"Name: {_currentUser.Name}";
-            EmailLabel.Text = $"Email: {_currentUser.Email}";
-            UsernameLabel.Text = $"Username: {_currentUser.Username}";
+            NameLabel.Text = $"Name: {currentUser.Name}";
+            EmailLabel.Text = $"Email: {currentUser.Email}";
+            UsernameLabel.Text = $"Username: {currentUser.Username}";
         }
 
         private void LoadUserPosts()
         {
-            using (var db = new AppDbContext())
+            using (var db = new AppDatabase())
             {
-                var userPosts = db.Connection.Table<Post>().Where(p => p.UserId == _currentUser.Id).ToList();
+                var userPosts = db.Connection.Table<Post>().Where(p => p.UserId == currentUser.Id).ToList();
                 PostsListView.ItemsSource = userPosts;
             }
         }
@@ -43,7 +43,7 @@ namespace App.Pages
             var post = (Post)e.SelectedItem;
             PostsListView.SelectedItem = null;
 
-            await Navigation.PushAsync(new ViewPost(post.Id, _currentUser));
+            await Navigation.PushAsync(new ViewPost(post.Id, currentUser));
         }
 
     }

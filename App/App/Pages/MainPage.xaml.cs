@@ -9,13 +9,13 @@ namespace App.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
-        private User _user;
+        private User users;
         public string SearchText { get; set; }
 
         public MainPage(User user)
         {
             InitializeComponent();
-            _user = user;
+            users = user;
             BindingContext = this;
         }
 
@@ -27,7 +27,7 @@ namespace App.Pages
 
         private void LoadPosts(string searchText = null)
         {
-            using (var db = new AppDbContext())
+            using (var db = new AppDatabase())
             {
                 var posts = db.Connection.Table<Post>().ToList();
                 List<PostWithAuthor> postWithAuthors = new List<PostWithAuthor>();
@@ -51,7 +51,7 @@ namespace App.Pages
             }
         }
 
-        private void PostSearchBar_SearchButtonPressed(object sender, EventArgs e)
+        private void SearchButton_Clicked(object sender, EventArgs e)
         {
             LoadPosts(SearchText);
         }
@@ -66,7 +66,7 @@ namespace App.Pages
             var post = (PostWithAuthor)e.SelectedItem;
             PostsListView.SelectedItem = null;
 
-            await Navigation.PushAsync(new ViewPost(post.Post.Id, _user));
+            await Navigation.PushAsync(new ViewPost(post.Post.Id, users));
         }
 
         private async void LogoutButton_Clicked(object sender, EventArgs e)
@@ -77,12 +77,12 @@ namespace App.Pages
 
         private async void CreatePostButton_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new CreatePost(_user));
+            await Navigation.PushAsync(new CreatePost(users));
         }
 
         private async void ProfileButton_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Profile(_user));
+            await Navigation.PushAsync(new Profile(users));
         }
     }
 }
