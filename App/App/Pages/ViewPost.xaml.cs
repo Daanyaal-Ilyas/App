@@ -17,6 +17,12 @@ namespace App.Pages
             _user = user;
             LoadPost(postId);
             LoadComments(postId);
+
+            // If the current user is not the author of the post, hide the delete button
+            if (_post.UserId != _user.Id)
+            {
+                DeletePostButton.IsVisible = false;
+            }
         }
 
         private void LoadPost(int postId)
@@ -32,6 +38,17 @@ namespace App.Pages
 
                 int totalLikes = db.Connection.Table<Like>().Count(l => l.PostId == _post.Id);
                 TotalLikesLabel.Text = $"{totalLikes} Likes";
+
+                // Set the text of the Like / Unlike Post button based on whether the current user has already liked the post or not
+                var existingLike = db.Connection.Table<Like>().FirstOrDefault(l => l.UserId == _user.Id && l.PostId == _post.Id);
+                if (existingLike == null)
+                {
+                    LikeButton.Text = "Like";
+                }
+                else
+                {
+                    LikeButton.Text = "Unlike";
+                }
             }
         }
 
@@ -80,6 +97,37 @@ namespace App.Pages
 
             await DisplayAlert("Success", "Comment added.", "OK");
         }
+        private async void DeletePostButton_Clicked(object sender, EventArgs e)
+        {
+            bool answer = await DisplayAlert("Delete post", "Are you sure you want to delete this post?", "Yes", "No");
+
+            if (answer)
+            {
+                using (var db = new AppDbContext())
+                {
+                    // Delete post
+                    db.Connection.Delete(_post);
+
+                    // Delete likes for the post
+                    var likes = db.Connection.Table<Like>().Where(l => l.PostId == _post.Id).ToList();
+                    foreach (var like in likes)
+                    {
+                        db.Connection.Delete(like);
+                    }
+
+                    // Delete comments for the post
+                    var comments = db.Connection.Table<Comment>().Where(c => c.PostId == _post.Id).ToList();
+                    foreach (var comment in comments)
+                    {
+                        db.Connection.Delete(comment);
+                    }
+                }
+
+                await DisplayAlert("Success", "Post deleted.", "OK");
+                await Navigation.PopAsync();
+            }
+        }
+
 
         private async void LikeButton_Clicked(object sender, EventArgs e)
         {
@@ -97,13 +145,20 @@ namespace App.Pages
 
                     db.Connection.Insert(newLike);
                     await DisplayAlert("Success", "Post liked.", "OK");
+
+                    // Update the button text to "Unlike"
+                    ((Button)sender).Text = "Unlike";
                 }
                 else
                 {
                     db.Connection.Delete(existingLike);
                     await DisplayAlert("Success", "Post unliked.", "OK");
+
+                    // Update the button text to "Like"
+                    ((Button)sender).Text = "Like";
                 }
             }
         }
+
     }
 }

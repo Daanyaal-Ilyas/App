@@ -30,9 +30,21 @@ namespace App.Pages
             using (var db = new AppDbContext())
             {
                 var userPosts = db.Connection.Table<Post>().Where(p => p.UserId == _currentUser.Id).ToList();
-                UserPostsListView.ItemsSource = userPosts;
+                PostsListView.ItemsSource = userPosts;
             }
         }
+        private async void PostsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem == null)
+            {
+                return;
+            }
+
+            var post = (Post)e.SelectedItem;
+            PostsListView.SelectedItem = null;
+
+            await Navigation.PushAsync(new ViewPost(post.Id, _currentUser));
+        }
+
     }
 }
-

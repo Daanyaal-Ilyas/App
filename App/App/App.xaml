@@ -7,6 +7,25 @@
                 <Setter Property="BarBackgroundColor" Value="#1976D2"/>
                 <Setter Property="BarTextColor" Value="White"/>
             </Style>
+
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="#444" />
+            </Style>
+
+            <Style TargetType="Entry">
+                <Setter Property="PlaceholderColor" Value="#AAA" />
+                <Setter Property="BackgroundColor" Value="#EEE" />
+                <Setter Property="TextColor" Value="#444" />
+                <Setter Property="Margin" Value="0,5,0,5" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="Margin" Value="0,10,0,0" />
+                <Setter Property="Padding" Value="10" />
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>
+

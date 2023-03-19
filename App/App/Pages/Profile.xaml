@@ -16,17 +16,21 @@
                 <Label x:Name="UsernameLabel" Text="Username" />
             </StackLayout>
 
-            <ListView x:Name="UserPostsListView" Grid.Row="1">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout>
-                                <Label Text="{Binding Title}" />
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <StackLayout Grid.Row="1" Margin="20">
+                <Label Text="Post History" FontSize="Large" Margin="0,0,0,10" />
+                <ListView x:Name="PostsListView" ItemSelected="PostsListView_ItemSelected" SeparatorVisibility="Default" SeparatorColor="LightGray" RowHeight="75">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Padding="10,5,10,5" BackgroundColor="White">
+                                    <Label Text="{Binding Title}" FontSize="18" FontAttributes="Bold" />
+                                    <Label Text="{Binding Description}" FontSize="14" LineBreakMode="TailTruncation" MaxLines="1" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
