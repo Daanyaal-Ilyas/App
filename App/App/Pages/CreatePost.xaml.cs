@@ -30,7 +30,7 @@ namespace App.Pages
             }
 
             await DisplayAlert("Success", "Post created successfully!", "OK");
-            await Navigation.PopAsync();
+            await Navigation.PushAsync(new MainPage(_currentUser));
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static Xamarin.Forms.Animation;
 
 namespace App.Pages
 {
@@ -8,21 +11,47 @@ namespace App.Pages
     public partial class MainPage : ContentPage
     {
         private User _user;
+        public string SearchText { get; set; }
 
         public MainPage(User user)
         {
             InitializeComponent();
             _user = user;
             LoadPosts();
+            BindingContext = this;
         }
 
-        private void LoadPosts()
+        private void LoadPosts(string searchText = null)
         {
             using (var db = new AppDbContext())
             {
                 var posts = db.Connection.Table<Post>().ToList();
-                PostsListView.ItemsSource = posts;
+                List<PostWithAuthor> postWithAuthors = new List<PostWithAuthor>();
+
+                foreach (var post in posts)
+                {
+                    User author = db.Connection.Find<User>(post.UserId);
+                    postWithAuthors.Add(new PostWithAuthor
+                    {
+                        Post = post,
+                        AuthorName = author.Name
+                    });
+                }
+
+                if (!string.IsNullOrEmpty(searchText))
+                {
+                    postWithAuthors = postWithAuthors.Where(p => p.Post.Title.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 || p.Post.Description.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                }
+
+                PostsListView.ItemsSource = postWithAuthors;
             }
+        }
+
+
+
+        private void PostSearchBar_SearchButtonPressed(object sender, EventArgs e)
+        {
+            LoadPosts(SearchText);
         }
 
         private async void PostsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -32,12 +61,17 @@ namespace App.Pages
                 return;
             }
 
-            var post = e.SelectedItem as Post;
+            var post = (PostWithAuthor)e.SelectedItem;
             PostsListView.SelectedItem = null;
 
-            await Navigation.PushAsync(new ViewPost(post.Id, _user));
+            await Navigation.PushAsync(new ViewPost(post.Post.Id, _user));
         }
 
+        private async void LogoutButton_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Login());
+            Navigation.RemovePage(this);
+        }
 
         private async void CreatePostButton_Clicked(object sender, EventArgs e)
         {
@@ -50,5 +84,6 @@ namespace App.Pages
         }
     }
 }
+
 
 

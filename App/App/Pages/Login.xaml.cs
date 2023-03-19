@@ -20,7 +20,8 @@ namespace App.Pages
                 var user = db.Connection.Table<User>().FirstOrDefault(u => u.Username == UsernameEntry.Text && u.Password == PasswordEntry.Text);
                 if (user != null)
                 {
-                    await Navigation.PushAsync(new MainPage(user));
+                    await Navigation.PushAsync(new MainPage(user), true);
+                    Navigation.RemovePage(Navigation.NavigationStack[0]);
                 }
                 else
                 {
