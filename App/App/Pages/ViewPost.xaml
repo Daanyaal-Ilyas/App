@@ -1,40 +1,41 @@
-﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App.Pages.ViewPost">
     <ContentPage.Content>
-        <StackLayout Padding="20,10">
-            <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
-                <Label x:Name="PostTitle" FontSize="Large" FontAttributes="Bold" />
-                <Button x:Name="DeletePostButton" Text="Delete Post" Clicked="DeletePostButton_Clicked" HorizontalOptions="EndAndExpand" TextColor="Red" />
-            </StackLayout>
-            <Label x:Name="PostDescription" Margin="0,10,0,0" />
-            <Label x:Name="PostAuthor" Margin="0,10,0,0" TextColor="Gray" />
-            <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
-                <Label x:Name="TotalLikesLabel" TextColor="Gray" />
-                <Button Text="Like" Clicked="LikeButton_Clicked" x:Name="LikeButton"  HorizontalOptions="EndAndExpand" />
-            </StackLayout>
-            <BoxView Color="Gray" HeightRequest="1" Margin="0,10,0,10" />
-            <Label Text="Comments:" FontAttributes="Bold" Margin="0,10,0,0" />
-            <ListView x:Name="CommentsListView" SeparatorVisibility="None" Margin="0,10,0,0">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Margin="0,5,0,5">
-                                <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding AuthorName}" FontAttributes="Italic" TextColor="Gray" HorizontalOptions="Start" VerticalOptions="Center" />
-                                    <Label Text="{Binding Comment.Text}" HorizontalOptions="Start" VerticalOptions="Center" />
+        <ScrollView>
+            <StackLayout Padding="20,10">
+                <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                    <Label x:Name="PostTitle" FontSize="Large" FontAttributes="Bold" />
+                    <Button x:Name="DeletePostButton" Text="Delete Post" Clicked="DeletePostButton_Clicked" HorizontalOptions="EndAndExpand" TextColor="Red" />
+                </StackLayout>
+                <Label x:Name="PostDescription" Margin="0,10,0,0" />
+                <Image x:Name="PostImage" Margin="0,10,0,0" />
+                <Label x:Name="PostAuthor" Margin="0,10,0,0" TextColor="Gray" />
+                <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                    <Label x:Name="TotalLikesLabel" TextColor="Gray" />
+                    <Button Text="Like" Clicked="LikeButton_Clicked" x:Name="LikeButton"  HorizontalOptions="EndAndExpand" />
+                </StackLayout>
+                <BoxView Color="Gray" HeightRequest="1" Margin="0,10,0,10" />
+                <Entry x:Name="NewCommentEntry" Placeholder="Write a comment..." Margin="0,10,0,0" />
+                <Button Text="Add Comment" Clicked="AddCommentButton_Clicked" Margin="0,10,0,0" />
+                <Label Text="Comments:" FontAttributes="Bold" Margin="0,20,0,0" />
+                <ListView x:Name="CommentsListView" SeparatorVisibility="None" Margin="0,10,0,0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Margin="0,5,0,5">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding AuthorName}" FontAttributes="Italic" TextColor="Gray" HorizontalOptions="Start" VerticalOptions="Center" />
+                                        <Label Text="{Binding Comment.Text}" HorizontalOptions="Start" VerticalOptions="Center" />
+                                    </StackLayout>
+                                    <BoxView Color="Gray" HeightRequest="1" Margin="0,5,0,5" />
                                 </StackLayout>
-                                <BoxView Color="Gray" HeightRequest="1" Margin="0,5,0,5" />
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Entry x:Name="NewCommentEntry" Placeholder="Write a comment..." Margin="0,10,0,0" />
-            <Button Text="Add Comment" Clicked="AddCommentButton_Clicked" Margin="0,10,0,0" />
-        </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
-
-
-

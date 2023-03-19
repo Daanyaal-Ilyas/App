@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -48,6 +49,11 @@ namespace App.Pages
                 else
                 {
                     LikeButton.Text = "Unlike";
+                }
+
+                if (_post.ImageData != null)
+                {
+                    PostImage.Source = ImageSource.FromStream(() => new MemoryStream(_post.ImageData));
                 }
             }
         }

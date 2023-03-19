@@ -1,4 +1,5 @@
-﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App.Pages.MainPage"
              BackgroundColor="#F5F5F5">
@@ -27,17 +28,19 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout Padding="5" Spacing="5">
-                                    <Label Text="{Binding Post.Title}" FontSize="18" FontAttributes="Bold" />
-                                    <Label Text="{Binding Post.Description}" FontSize="14" LineBreakMode="TailTruncation" MaxLines="1" />
-                                    <Label FontSize="12" TextColor="Gray" FontAttributes="Italic">
-                                        <Label.FormattedText>
-                                            <FormattedString>
-                                                <Span Text="by " />
-                                                <Span Text="{Binding AuthorName}" />
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                    </Label>
+                                <StackLayout Orientation="Horizontal" Padding="5" Spacing="10">
+                                    <StackLayout Spacing="5" VerticalOptions="Start">
+                                        <Label Text="{Binding Post.Title}" FontSize="18" FontAttributes="Bold" />
+                                        <Label Text="{Binding Post.Description}" FontSize="14" LineBreakMode="TailTruncation" MaxLines="1" />
+                                        <Label FontSize="12" TextColor="Gray" FontAttributes="Italic">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="by " />
+                                                    <Span Text="{Binding AuthorName}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </StackLayout>
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>

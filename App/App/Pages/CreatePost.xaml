@@ -1,26 +1,19 @@
-﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App.Pages.CreatePost">
     <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <StackLayout Grid.Row="0" Padding="10">
-                <Label Text="Create Post" FontSize="Large" FontAttributes="Bold"/>
+        <ScrollView>
+            <StackLayout Padding="20">
+                <Label Text="Title" />
+                <Entry x:Name="TitleEntry" />
+                <Label Text="Description" />
+                <Editor x:Name="DescriptionEditor" HeightRequest="100" />
+                <Label Text="Upload Image" />
+                <Button Text="Choose Image" Clicked="ChooseImageButton_Clicked" />
+                <Image x:Name="PostImage" Aspect="AspectFill" HeightRequest="200" />
+                <Button Text="Create Post" Clicked="CreatePostButton_Clicked" />
             </StackLayout>
-            <StackLayout Grid.Row="1" Padding="10">
-                <Label Text="Title" FontSize="Medium" FontAttributes="Bold"/>
-                <Entry x:Name="TitleEntry" Placeholder="Title" />
-                <Label Text="Description" FontSize="Medium" FontAttributes="Bold" Margin="0,10,0,0"/>
-                <Editor x:Name="DescriptionEntry" Placeholder="Description" HeightRequest="200"/>
-            </StackLayout>
-            <StackLayout Grid.Row="2" Padding="10">
-                <Button Text="Create" Clicked="CreateButton_Clicked" />
-            </StackLayout>
-        </Grid>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
-

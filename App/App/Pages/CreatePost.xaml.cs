@@ -1,27 +1,54 @@
 ﻿using System;
+using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Essentials;
 
 namespace App.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreatePost : ContentPage
     {
-        private User _currentUser;
+        private User _user;
+        private byte[] _imageData;
 
-        public CreatePost(User currentUser)
+        public CreatePost(User user)
         {
             InitializeComponent();
-            _currentUser = currentUser;
+            _user = user;
         }
 
-        private async void CreateButton_Clicked(object sender, EventArgs e)
+        private async void ChooseImageButton_Clicked(object sender, EventArgs e)
         {
+            var result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions
+            {
+                Title = "Choose an image for your post"
+            });
+
+            if (result != null)
+            {
+                var stream = await result.OpenReadAsync();
+                _imageData = new byte[stream.Length];
+                await stream.ReadAsync(_imageData, 0, _imageData.Length);
+
+                PostImage.Source = ImageSource.FromStream(() => new MemoryStream(_imageData));
+            }
+        }
+
+        private async void CreatePostButton_Clicked(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(TitleEntry.Text) || string.IsNullOrEmpty(DescriptionEditor.Text))
+            {
+                await DisplayAlert("Error", "Please fill in both the title and description fields.", "OK");
+                return;
+            }
+
             var newPost = new Post
             {
                 Title = TitleEntry.Text,
-                Description = DescriptionEntry.Text,
-                UserId = _currentUser.Id
+                Description = DescriptionEditor.Text,
+                UserId = _user.Id,
+                ImageData = _imageData
             };
 
             using (var db = new AppDbContext())
@@ -29,9 +56,10 @@ namespace App.Pages
                 db.Connection.Insert(newPost);
             }
 
-            await DisplayAlert("Success", "Post created successfully!", "OK");
-            await Navigation.PushAsync(new MainPage(_currentUser));
+            await DisplayAlert("Success", "Post created!", "OK");
+            await Navigation.PopAsync(); // Navigate back to the previous page
         }
     }
 }
+
 

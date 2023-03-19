@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using static Xamarin.Forms.Animation;
 
 namespace App.Pages
 {
@@ -17,8 +16,13 @@ namespace App.Pages
         {
             InitializeComponent();
             _user = user;
-            LoadPosts();
             BindingContext = this;
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            LoadPosts();
         }
 
         private void LoadPosts(string searchText = null)
@@ -46,8 +50,6 @@ namespace App.Pages
                 PostsListView.ItemsSource = postWithAuthors;
             }
         }
-
-
 
         private void PostSearchBar_SearchButtonPressed(object sender, EventArgs e)
         {
@@ -84,6 +86,4 @@ namespace App.Pages
         }
     }
 }
-
-
 
