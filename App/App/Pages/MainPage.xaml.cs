@@ -92,5 +92,7 @@ namespace App.Pages
         {
             await Navigation.PushAsync(new Profile(users));
         }
+
+
     }
 }

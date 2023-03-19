@@ -20,18 +20,43 @@ namespace App.Pages
 
         private async void ChooseImageButton_Clicked(object sender, EventArgs e)
         {
-            var result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions
-            {
-                Title = "Choose an image for your post"
-            });
+            var action = await DisplayActionSheet("Upload Image", "Cancel", null, "Choose from Gallery", "Take Photo");
 
-            if (result != null)
+            switch (action)
             {
-                var stream = await result.OpenReadAsync();
-                imageData = new byte[stream.Length];
-                await stream.ReadAsync(imageData, 0, imageData.Length);
+                case "Choose from Gallery":
+                    var result = await MediaPicker.PickPhotoAsync(new MediaPickerOptions
+                    {
+                        Title = "Choose an image for your post"
+                    });
 
-                PostImage.Source = ImageSource.FromStream(() => new MemoryStream(imageData));
+                    if (result != null)
+                    {
+                        var stream = await result.OpenReadAsync();
+                        imageData = new byte[stream.Length];
+                        await stream.ReadAsync(imageData, 0, imageData.Length);
+
+                        PostImage.Source = ImageSource.FromStream(() => new MemoryStream(imageData));
+                    }
+
+                    break;
+
+                case "Take Photo":
+                    var photoResult = await MediaPicker.CapturePhotoAsync(new MediaPickerOptions
+                    {
+                        Title = "Take a photo for your post"
+                    });
+
+                    if (photoResult != null)
+                    {
+                        var stream = await photoResult.OpenReadAsync();
+                        imageData = new byte[stream.Length];
+                        await stream.ReadAsync(imageData, 0, imageData.Length);
+
+                        PostImage.Source = ImageSource.FromStream(() => new MemoryStream(imageData));
+                    }
+
+                    break;
             }
         }
 
@@ -61,5 +86,3 @@ namespace App.Pages
         }
     }
 }
-
-

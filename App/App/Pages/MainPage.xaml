@@ -22,7 +22,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <SearchBar x:Name="PostSearchBar" Grid.Row="0" Text="{Binding SearchText}" Placeholder="Search posts..." SearchButtonPressed="SearchButton_Clicked" TextChanged="PostSearchBar_TextChanged" BackgroundColor="{StaticResource PrimaryColor}" TextColor="White" PlaceholderColor="White"/>
+            <SearchBar x:Name="PostSearchBar" Grid.Row="0" Text="{Binding SearchText}" Placeholder="Search posts..." SearchButtonPressed="SearchButton_Clicked"  TextChanged="PostSearchBar_TextChanged" BackgroundColor="{StaticResource PrimaryColor}" TextColor="White" PlaceholderColor="White"/>
             <StackLayout Grid.Row="1" Padding="10" BackgroundColor="#1D1D1D">
                 <ListView x:Name="PostsListView" ItemSelected="PostsListView_ItemSelected" SeparatorVisibility="Default" SeparatorColor="#1D1D1D" RowHeight="80">
                     <ListView.ItemTemplate>
