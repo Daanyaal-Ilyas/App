@@ -9,7 +9,7 @@ public class AppDbContext : IDisposable
 
     public AppDbContext()
     {
-        string databasePath = Path.Combine(FileSystem.AppDataDirectory, "MyDatabase.db");
+        string databasePath = Path.Combine(FileSystem.AppDataDirectory, "main.db");
         Connection = new SQLiteConnection(databasePath);
         Connection.CreateTable<User>();
         Connection.CreateTable<Post>();
