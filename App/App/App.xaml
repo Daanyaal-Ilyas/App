@@ -3,28 +3,36 @@
              x:Class="App.App">
     <Application.Resources>
         <ResourceDictionary>
+            <Color x:Key="PrimaryColor">#1D1D1D</Color>
+            <Color x:Key="SecondaryColor">#6E6E6E</Color>
+            <Color x:Key="AccentColor">#C0C0C0</Color>
+
             <Style TargetType="NavigationPage">
-                <Setter Property="BarBackgroundColor" Value="#1976D2"/>
-                <Setter Property="BarTextColor" Value="White"/>
+                <Setter Property="BarBackgroundColor" Value="{StaticResource PrimaryColor}" />
+                <Setter Property="BarTextColor" Value="White" />
             </Style>
 
             <Style TargetType="Label">
-                <Setter Property="TextColor" Value="#444" />
+                <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
             </Style>
 
             <Style TargetType="Entry">
-                <Setter Property="PlaceholderColor" Value="#AAA" />
-                <Setter Property="BackgroundColor" Value="#EEE" />
-                <Setter Property="TextColor" Value="#444" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource SecondaryColor}" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
                 <Setter Property="Margin" Value="0,5,0,5" />
             </Style>
 
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="Black" />
+                <Setter Property="BackgroundColor" Value="{StaticResource AccentColor}" />
                 <Setter Property="Margin" Value="0,10,0,0" />
                 <Setter Property="Padding" Value="10" />
+                <Setter Property="BorderRadius" Value="5" />
             </Style>
 
         </ResourceDictionary>
     </Application.Resources>
 </Application>
+
+

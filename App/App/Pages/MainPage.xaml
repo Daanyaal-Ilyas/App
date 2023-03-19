@@ -6,7 +6,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">
-                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
                 <Setter Property="FontFamily" Value="Roboto"/>
             </Style>
         </ResourceDictionary>
@@ -22,17 +22,17 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <SearchBar x:Name="PostSearchBar" Grid.Row="0" Text="{Binding SearchText}" Placeholder="Search posts..." SearchButtonPressed="SearchButton_Clicked" />
-            <StackLayout Grid.Row="1" Padding="10">
+            <SearchBar x:Name="PostSearchBar" Grid.Row="0" Text="{Binding SearchText}" Placeholder="Search posts..." SearchButtonPressed="SearchButton_Clicked" TextChanged="PostSearchBar_TextChanged" BackgroundColor="{StaticResource PrimaryColor}" />
+            <StackLayout Grid.Row="1" Padding="10" BackgroundColor="White">
                 <ListView x:Name="PostsListView" ItemSelected="PostsListView_ItemSelected" SeparatorVisibility="Default" SeparatorColor="LightGray" RowHeight="75">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout Orientation="Horizontal" Padding="5" Spacing="10">
+                                <StackLayout Orientation="Horizontal" Padding="5,10" Spacing="10" BackgroundColor="{StaticResource PrimaryColor}">
                                     <StackLayout Spacing="5" VerticalOptions="Start">
-                                        <Label Text="{Binding Post.Title}" FontSize="18" FontAttributes="Bold" />
-                                        <Label Text="{Binding Post.Description}" FontSize="14" LineBreakMode="TailTruncation" MaxLines="1" />
-                                        <Label FontSize="12" TextColor="Gray" FontAttributes="Italic">
+                                        <Label Text="{Binding Post.Title}" FontSize="18" FontAttributes="Bold" TextColor="White" />
+                                        <Label Text="{Binding Post.Description}" FontSize="14" LineBreakMode="TailTruncation" MaxLines="1" TextColor="White" />
+                                        <Label FontSize="12" TextColor="LightGray" FontAttributes="Italic">
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="by " />

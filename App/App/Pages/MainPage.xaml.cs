@@ -55,6 +55,14 @@ namespace App.Pages
         {
             LoadPosts(SearchText);
         }
+        private void PostSearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SearchText = e.NewTextValue;
+            if (string.IsNullOrEmpty(SearchText))
+            {
+                LoadPosts();
+            }
+        }
 
         private async void PostsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
@@ -86,4 +94,3 @@ namespace App.Pages
         }
     }
 }
-
