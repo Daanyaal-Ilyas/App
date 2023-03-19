@@ -27,8 +27,8 @@
                             <ViewCell>
                                 <StackLayout Margin="0,5,0,5">
                                     <StackLayout Orientation="Horizontal">
-                                        <Label Text="{Binding AuthorName}" FontAttributes="Italic" TextColor="{StaticResource SecondaryColor}" HorizontalOptions="Start" VerticalOptions="Center" />
-                                        <Label Text="{Binding Comment.Text}" HorizontalOptions="Start" VerticalOptions="Center" TextColor="{StaticResource PrimaryColor}" />
+                                        <Label Text="{Binding AuthorName}" FontAttributes="Italic" TextColor="White" HorizontalOptions="Start" VerticalOptions="Center" />
+                                        <Label Text="{Binding Comment.Text}" HorizontalOptions="Start" VerticalOptions="Center" TextColor="White" />
                                     </StackLayout>
                                     <BoxView Color="{StaticResource SecondaryColor}" HeightRequest="1" Margin="0,5,0,5" />
                                 </StackLayout>

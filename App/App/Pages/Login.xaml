@@ -1,13 +1,13 @@
 ﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App.Pages.Login"
-             BackgroundColor="{StaticResource PrimaryColor}">
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          x:Class="App.Pages.Login"
+          BackgroundColor="{StaticResource PrimaryColor}">
     <ContentPage.Content>
         <StackLayout Padding="20" Spacing="10">
             <Label Text="Login" FontSize="Large" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" />
-            <Entry x:Name="UsernameEntry" Placeholder="Username" BackgroundColor="White" TextColor="{StaticResource PrimaryColor}" FontSize="Medium" />
-            <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" BackgroundColor="White" TextColor="{StaticResource PrimaryColor}" FontSize="Medium" />
-            <Button Text="Login" BackgroundColor="{StaticResource AccentColor}" TextColor="White" FontSize="Medium" CornerRadius="5" Clicked="LoginButton_Clicked" />
+            <Entry x:Name="UsernameEntry" Placeholder="Username" PlaceholderColor="White" BackgroundColor="{StaticResource PrimaryColor}" TextColor="White" FontSize="Medium" />
+            <Entry x:Name="PasswordEntry" Placeholder="Password" PlaceholderColor="White" IsPassword="True" BackgroundColor="{StaticResource PrimaryColor}" TextColor="White" FontSize="Medium" />
+            <Button Text="Login" BackgroundColor="{StaticResource AccentColor}" TextColor="{StaticResource PrimaryColor}" FontSize="Medium" CornerRadius="5" Clicked="LoginButton_Clicked" />
             <Button Text="Register" BackgroundColor="White" TextColor="{StaticResource PrimaryColor}" FontSize="Medium" CornerRadius="5" Clicked="RegisterButton_Clicked" />
         </StackLayout>
     </ContentPage.Content>

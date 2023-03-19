@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App.Pages.MainPage"
-             BackgroundColor="#F5F5F5">
+             BackgroundColor="#1D1D1D">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">
@@ -22,9 +22,9 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <SearchBar x:Name="PostSearchBar" Grid.Row="0" Text="{Binding SearchText}" Placeholder="Search posts..." SearchButtonPressed="SearchButton_Clicked" TextChanged="PostSearchBar_TextChanged" BackgroundColor="{StaticResource PrimaryColor}" />
-            <StackLayout Grid.Row="1" Padding="10" BackgroundColor="White">
-                <ListView x:Name="PostsListView" ItemSelected="PostsListView_ItemSelected" SeparatorVisibility="Default" SeparatorColor="LightGray" RowHeight="75">
+            <SearchBar x:Name="PostSearchBar" Grid.Row="0" Text="{Binding SearchText}" Placeholder="Search posts..." SearchButtonPressed="SearchButton_Clicked" TextChanged="PostSearchBar_TextChanged" BackgroundColor="{StaticResource PrimaryColor}" TextColor="White" PlaceholderColor="White"/>
+            <StackLayout Grid.Row="1" Padding="10" BackgroundColor="#1D1D1D">
+                <ListView x:Name="PostsListView" ItemSelected="PostsListView_ItemSelected" SeparatorVisibility="Default" SeparatorColor="#1D1D1D" RowHeight="80">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

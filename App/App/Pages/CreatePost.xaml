@@ -1,18 +1,28 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App.Pages.CreatePost">
+             x:Class="App.Pages.CreatePost"
+             BackgroundColor="{StaticResource PrimaryColor}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Editor">
+                <Setter Property="PlaceholderColor" Value="White" />
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="PlaceholderColor" Value="White" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="20">
-                <Label Text="Title" />
-                <Entry x:Name="TitleEntry" />
-                <Label Text="Description" />
-                <Editor x:Name="DescriptionEditor" HeightRequest="100" />
-                <Label Text="Upload Image" />
-                <Button Text="Choose Image" Clicked="ChooseImageButton_Clicked" />
+            <StackLayout Padding="20" Spacing="15">
+                <Label Text="Title" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                <Entry x:Name="TitleEntry" BackgroundColor="{StaticResource PrimaryColor}" TextColor="White" FontSize="16" Placeholder="Enter post title" />
+                <Label Text="Description" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                <Editor x:Name="DescriptionEditor" HeightRequest="100" BackgroundColor="{StaticResource PrimaryColor}" TextColor="White" FontSize="16" Placeholder="Enter post description" />
+                <Label Text="Upload Image" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                <Button Text="Choose Image" Clicked="ChooseImageButton_Clicked" BackgroundColor="#212121" TextColor="White" FontSize="16" FontAttributes="Bold" />
                 <Image x:Name="PostImage" Aspect="AspectFill" HeightRequest="200" />
-                <Button Text="Create Post" Clicked="CreatePostButton_Clicked" />
+                <Button Text="Create Post" Clicked="CreatePostButton_Clicked" BackgroundColor="#212121" TextColor="White" FontSize="16" FontAttributes="Bold" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
