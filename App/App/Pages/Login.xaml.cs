@@ -17,7 +17,7 @@ namespace App.Pages
         {
             using (var db = new AppDatabase())
             {
-                var user = db.Connection.Table<User>().FirstOrDefault(u => u.Username == UsernameEntry.Text && u.Password == PasswordEntry.Text);
+                var user = db.UserRepo.GetUserByUsernameAndPassword(UsernameEntry.Text, PasswordEntry.Text);
                 if (user != null)
                 {
                     await Navigation.PushAsync(new MainPage(user), true);
@@ -25,10 +25,11 @@ namespace App.Pages
                 }
                 else
                 {
-                    await DisplayAlert("Error", "Invalid username or password.", "OK");
+                    await DisplayAlert("Wrong", "Invalid username or password.", "OK");
                 }
             }
         }
+
 
         private async void RegisterButton_Clicked(object sender, EventArgs e)
         {

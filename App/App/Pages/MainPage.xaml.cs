@@ -29,12 +29,12 @@ namespace App.Pages
         {
             using (var db = new AppDatabase())
             {
-                var posts = db.Connection.Table<Post>().ToList();
+                var posts = db.PostRepo.GetAllPosts();
                 List<PostWithAuthor> postWithAuthors = new List<PostWithAuthor>();
 
                 foreach (var post in posts)
                 {
-                    User author = db.Connection.Find<User>(post.UserId);
+                    User author = db.UserRepo.GetUserById(post.UserId);
                     postWithAuthors.Add(new PostWithAuthor
                     {
                         Post = post,
@@ -50,6 +50,7 @@ namespace App.Pages
                 PostsListView.ItemsSource = postWithAuthors;
             }
         }
+
 
         private void SearchButton_Clicked(object sender, EventArgs e)
         {

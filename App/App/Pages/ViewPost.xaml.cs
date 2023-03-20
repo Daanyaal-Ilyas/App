@@ -30,18 +30,18 @@ namespace App.Pages
         {
             using (var db = new AppDatabase())
             {
-                post = db.Connection.Table<Post>().FirstOrDefault(p => p.Id == postId);
-                User postAuthor = db.Connection.Find<User>(post.UserId);
+                post = db.PostRepo.GetPostById(postId);
+                User postAuthor = db.UserRepo.GetUserById(post.UserId);
 
                 PostTitle.Text = post.Title;
                 PostDescription.Text = post.Description;
                 PostAuthor.Text = $"By {postAuthor.Name}";
 
-                int totalLikes = db.Connection.Table<Like>().Count(l => l.PostId == post.Id);
+                int totalLikes = db.LikeRepo.GetTotalLikesForPost(post.Id);
                 TotalLikesLabel.Text = $"{totalLikes} Likes";
 
                 // Set the text of the Like / Unlike Post button based on whether the current user has already liked the post or not
-                var existingLike = db.Connection.Table<Like>().FirstOrDefault(l => l.UserId == users.Id && l.PostId == post.Id);
+                var existingLike = db.LikeRepo.GetLikeByUserIdAndPostId(users.Id, post.Id);
                 if (existingLike == null)
                 {
                     LikeButton.Text = "Like";
@@ -62,12 +62,12 @@ namespace App.Pages
         {
             using (var db = new AppDatabase())
             {
-                var comments = db.Connection.Table<Comment>().Where(c => c.PostId == postId).ToList();
+                var comments = db.CommentsRepo.GetCommentsByPostId(postId);
                 List<CommentWithAuthor> commentsWithAuthors = new List<CommentWithAuthor>();
 
                 foreach (var comment in comments)
                 {
-                    User author = db.Connection.Find<User>(comment.UserId);
+                    User author = db.UserRepo.GetUserById(comment.UserId);
                     commentsWithAuthors.Add(new CommentWithAuthor
                     {
                         Comment = comment,
@@ -78,6 +78,7 @@ namespace App.Pages
                 CommentsListView.ItemsSource = commentsWithAuthors;
             }
         }
+
         public class CommentWithAuthor
         {
             public Comment Comment { get; set; }
@@ -95,7 +96,7 @@ namespace App.Pages
                     PostId = post.Id
                 };
 
-                db.Connection.Insert(newComment);
+                db.CommentsRepo.CreateComment(newComment);
             }
 
             NewCommentEntry.Text = string.Empty;
@@ -112,21 +113,13 @@ namespace App.Pages
                 using (var db = new AppDatabase())
                 {
                     // Delete post
-                    db.Connection.Delete(   post);
+                    db.PostRepo.DeletePost(post);
 
                     // Delete likes for the post
-                    var likes = db.Connection.Table<Like>().Where(l => l.PostId == post.Id).ToList();
-                    foreach (var like in likes)
-                    {
-                        db.Connection.Delete(like);
-                    }
+                    db.LikeRepo.DeleteLikesForPost(post.Id);
 
                     // Delete comments for the post
-                    var comments = db.Connection.Table<Comment>().Where(c => c.PostId == post.Id).ToList();
-                    foreach (var comment in comments)
-                    {
-                        db.Connection.Delete(comment);
-                    }
+                    db.CommentsRepo.DeleteCommentsForPost(post.Id);
                 }
 
                 await DisplayAlert("Success", "Post deleted.", "OK");
@@ -134,12 +127,11 @@ namespace App.Pages
             }
         }
 
-
         private async void LikeButton_Clicked(object sender, EventArgs e)
         {
             using (var db = new AppDatabase())
             {
-                var existingLike = db.Connection.Table<Like>().FirstOrDefault(l => l.UserId == users.Id && l.PostId == post.Id);
+                var existingLike = db.LikeRepo.GetLikeByUserIdAndPostId(users.Id, post.Id);
 
                 if (existingLike == null)
                 {
@@ -149,7 +141,7 @@ namespace App.Pages
                         PostId = post.Id
                     };
 
-                    db.Connection.Insert(newLike);
+                    db.LikeRepo.CreateLike(newLike);
                     await DisplayAlert("Success", "Post liked.", "OK");
 
                     // Update the button text to "Unlike"
@@ -157,7 +149,7 @@ namespace App.Pages
                 }
                 else
                 {
-                    db.Connection.Delete(existingLike);
+                    db.LikeRepo.DeleteLike(existingLike);
                     await DisplayAlert("Success", "Post unliked.", "OK");
 
                     // Update the button text to "Like"

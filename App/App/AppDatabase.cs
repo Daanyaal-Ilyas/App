@@ -7,6 +7,12 @@ public class AppDatabase : IDisposable
 {
     public SQLiteConnection Connection { get; }
 
+    public PostRepo PostRepo => new PostRepo(Connection);
+    public UserRepo UserRepo => new UserRepo(Connection);
+    public CommentsRepo CommentsRepo => new CommentsRepo(this);
+    public LikeRepo LikeRepo => new LikeRepo(this);
+
+
     public AppDatabase()
     {
         string databasePath = Path.Combine(FileSystem.AppDataDirectory, "main.db");

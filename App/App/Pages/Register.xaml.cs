@@ -32,7 +32,7 @@ namespace App.Pages
             // Check if the username is already taken
             using (var db = new AppDatabase())
             {
-                var existingUser = db.Connection.Table<User>().FirstOrDefault(u => u.Username == UsernameEntry.Text);
+                var existingUser = db.UserRepo.GetUserByUsernameAndPassword(UsernameEntry.Text, PasswordEntry.Text);
                 if (existingUser != null)
                 {
                     await DisplayAlert("Error", "Username is already taken. Please choose a different one.", "OK");
@@ -51,12 +51,13 @@ namespace App.Pages
 
             using (var db = new AppDatabase())
             {
-                db.Connection.Insert(newUser);
+                db.UserRepo.CreateUser(newUser);
             }
 
             await DisplayAlert("Success", "Registration successful!", "OK");
             await Navigation.PopAsync(); // Navigate back to the login page
         }
+
 
         private bool IsValidEmail(string email)
         {

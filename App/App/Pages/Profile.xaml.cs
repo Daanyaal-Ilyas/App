@@ -29,10 +29,11 @@ namespace App.Pages
         {
             using (var db = new AppDatabase())
             {
-                var userPosts = db.Connection.Table<Post>().Where(p => p.UserId == currentUser.Id).ToList();
+                var userPosts = db.PostRepo.GetAllPosts().Where(p => p.UserId == currentUser.Id).ToList();
                 PostsListView.ItemsSource = userPosts;
             }
         }
+
         private async void PostsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)

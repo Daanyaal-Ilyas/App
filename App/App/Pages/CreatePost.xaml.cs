@@ -78,11 +78,12 @@ namespace App.Pages
 
             using (var db = new AppDatabase())
             {
-                db.Connection.Insert(newPost);
+                db.PostRepo.CreatePost(newPost);
             }
 
             await DisplayAlert("Success", "Post created!", "OK");
             await Navigation.PopAsync(); // Navigate back to the previous page
         }
+
     }
 }
