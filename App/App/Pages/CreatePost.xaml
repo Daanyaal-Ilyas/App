@@ -14,7 +14,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="20" Spacing="15">
+            <StackLayout x:Name="myNotLayout" Margin="0,35,0,0"  Padding="20" Spacing="15">
                 <Label Text="Title" TextColor="White" FontSize="Large" FontAttributes="Bold" />
                 <Entry x:Name="TitleEntry" BackgroundColor="{StaticResource PrimaryColor}" TextColor="White" FontSize="16" Placeholder="Enter post title" />
                 <Label Text="Description" TextColor="White" FontSize="Large" FontAttributes="Bold" />
@@ -23,6 +23,9 @@
                 <Button Text="Choose Image" Clicked="ChooseImageButton_Clicked" BackgroundColor="#212121" TextColor="White" FontSize="16" FontAttributes="Bold" />
                 <Image x:Name="PostImage" Aspect="AspectFill" HeightRequest="200" />
                 <Button Text="Create Post" Clicked="CreatePostButton_Clicked" BackgroundColor="#212121" TextColor="White" FontSize="16" FontAttributes="Bold" />
+                
+                
+                
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

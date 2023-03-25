@@ -9,12 +9,20 @@ namespace App.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreatePost : ContentPage
     {
+        INotifificationManager notificationManager;
+        int notificationNumber;
         private User users;
         private byte[] imageData;
 
         public CreatePost(User user)
         {
             InitializeComponent();
+            notificationManager = DependencyService.Get<INotifificationManager>();
+            notificationManager.NotificationReceived += (sender, eventArgs) =>
+            {
+                var evtData = (NotificationEventArgs)eventArgs;
+                ShowNotification(evtData.Title, evtData.Message);
+            };
             users = user;
         }
 
@@ -75,15 +83,32 @@ namespace App.Pages
                 UserId = users.Id,
                 ImageData = imageData
             };
-
             using (var db = new AppDatabase())
             {
                 db.PostRepo.CreatePost(newPost);
             }
 
             await DisplayAlert("Success", "Post created!", "OK");
-            await Navigation.PopAsync(); // Navigate back to the previous page
+
+        
+            notificationNumber++;
+            string title = $"My Notes App #{notificationNumber}";
+            string message = $"You have now received {notificationNumber} notifications!";
+            notificationManager.ScheduleNotification(title, message);
+
+            await Navigation.PopAsync();
         }
 
+        public void ShowNotification(string title, string message)
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                var msg = new Label()
+                {
+                    Text = $"Notification Received:\nTitle: {title}\nMessage:{message}"
+                };
+                myNotLayout.Children.Add(msg);
+            });
+        }
     }
 }
