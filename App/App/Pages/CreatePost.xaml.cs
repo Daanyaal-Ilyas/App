@@ -3,6 +3,7 @@ using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
+using System.Threading.Tasks;
 
 namespace App.Pages
 {
@@ -17,7 +18,7 @@ namespace App.Pages
         public CreatePost(User user)
         {
             InitializeComponent();
-            notificationManager = DependencyService.Get<INotifificationManager>();
+            notificationManager = DependencyService.Resolve<INotifificationManager>();
             notificationManager.NotificationReceived += (sender, eventArgs) =>
             {
                 var evtData = (NotificationEventArgs)eventArgs;
@@ -90,12 +91,11 @@ namespace App.Pages
 
             await DisplayAlert("Success", "Post created!", "OK");
 
-        
-            notificationNumber++;
-            string title = $"My Notes App #{notificationNumber}";
-            string message = $"You have now received {notificationNumber} notifications!";
-            notificationManager.ScheduleNotification(title, message);
 
+            notificationNumber++;
+            string title = $"Post Created #{notificationNumber}";
+            string message = $"Post Created {notificationNumber} notifications!";
+            notificationManager.ScheduleNotification(title, message);
             await Navigation.PopAsync();
         }
 

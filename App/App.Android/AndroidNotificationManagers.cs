@@ -10,7 +10,6 @@ using Android.Views;
 using Android.Widget;
 using AndroidApp = Android.App.Application;
 using Xamarin.Forms;
-using Android.Support.V4.App;
 using Android.Graphics;
 using AndroidX.Core.App;
 
@@ -36,39 +35,44 @@ namespace App.Droid
                 CreateNotificationChannel();
             }
 
-            public int ScheduleNotification(string title, string message)
+        public int ScheduleNotification(string title, string message)
+        {
+            if (!channelInitialized)
             {
-                if (!channelInitialized)
-                {
-                    CreateNotificationChannel();
-                }
-                messageId++;
+                CreateNotificationChannel();
+            }
+            messageId++;
 
+            Intent intent = new Intent(AndroidApp.Context, typeof(MainActivity));
+            intent.PutExtra(TitleKey, title);
+            intent.PutExtra(MessageKey, message);
 
-                Intent intent = new Intent(AndroidApp.Context,
-               typeof(MainActivity));
-                intent.PutExtra(TitleKey, title);
-                intent.PutExtra(MessageKey, message);
+            PendingIntentFlags flags = Build.VERSION.SdkInt >= BuildVersionCodes.S ? PendingIntentFlags.Immutable : PendingIntentFlags.UpdateCurrent;
+            PendingIntent pendingIntent = PendingIntent.GetActivity(AndroidApp.Context, pendingIntentId, intent, flags);
 
-
-
-                PendingIntent pendingIntent = PendingIntent.GetActivity(AndroidApp.Context, pendingIntentId, intent, PendingIntentFlags.Immutable);
-
-
-                Android.Support.V4.App.NotificationCompat.Builder builder = new
-                Android.Support.V4.App.NotificationCompat.Builder(AndroidApp.Context, channelId)
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(AndroidApp.Context, channelId)
                 .SetContentIntent(pendingIntent)
                 .SetContentTitle(title)
                 .SetContentText(message)
-                 .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, Resource.Drawable.xamagonBlue))
+                .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, Resource.Drawable.xamagonBlue))
                 .SetSmallIcon(Resource.Drawable.xamagonBlue)
-                .SetDefaults((int)NotificationDefaults.Sound |
-               (int)NotificationDefaults.Vibrate);
-                Notification notification = builder.Build();
-                manager.Notify(messageId, notification);
-                return messageId;
+                .SetDefaults((int)NotificationDefaults.Sound | (int)NotificationDefaults.Vibrate)
+                .SetPriority(NotificationCompat.PriorityHigh)
+                .SetAutoCancel(true)
+                .SetVisibility(NotificationCompat.VisibilityPublic);
+
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
+            {
+                builder.SetCategory(NotificationCompat.CategoryMessage);
             }
-            public void ReceiveNotification(string title, string message)
+
+            Notification notification = builder.Build();
+            manager.Notify(messageId, notification);
+            return messageId;
+        }
+
+
+        public void ReceiveNotification(string title, string message)
             {
                 var args = new NotificationEventArgs()
                 {
@@ -80,27 +84,21 @@ namespace App.Droid
                 NotificationReceived?.Invoke(null, args);
             }
 
-            void CreateNotificationChannel()
+        void CreateNotificationChannel()
+        {
+            manager = (NotificationManager)AndroidApp.Context.GetSystemService(AndroidApp.NotificationService);
+
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
             {
-                manager = (NotificationManager)AndroidApp.Context.GetSystemService(AndroidApp.NotificationService);
-
-                if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
-
-
-
-
+                var channelNameJava = new Java.Lang.String(channelName);
+                var channel = new NotificationChannel(channelId, channelNameJava, NotificationImportance.High)
                 {
-                    var channelNameJava = new Java.Lang.String(channelName);
-                    var channel = new NotificationChannel(channelId, channelNameJava, NotificationImportance.Default)
-                    {
-                        Description = channelDescription
-                    };
-                    manager.CreateNotificationChannel(channel);
-                }
-                channelInitialized = true;
+                    Description = channelDescription
+                };
+                manager.CreateNotificationChannel(channel);
             }
-
-
-
+            channelInitialized = true;
         }
+
+    }
 }

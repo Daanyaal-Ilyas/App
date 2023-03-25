@@ -20,6 +20,7 @@ namespace App.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            DependencyService.Register<INotifificationManager, AndroidNotificationManagers>();
             LoadApplication(new App());
             CreateNotificationFromIntent(Intent);
         }

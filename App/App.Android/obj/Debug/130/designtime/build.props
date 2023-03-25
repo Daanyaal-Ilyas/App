@@ -25,11 +25,11 @@ androidgeneratejnimarshalmethods=false
 os=windows_nt
 androidincludedebugsymbols=true
 androidpackagenamingpolicy=lowercasecrc64
-_nugetassetstimestamp=638153499818062692
+_nugetassetstimestamp=638153548966994871
 typemapkind=strings-asm
 androidsupportedabis=arm64-v8a
 armeabi-v7a
 x86
 x86_64
 androidmanifestplaceholders=
-projectfullpath=c:\users\rajad\downloads\app-main\app-main\app-main\app\app.android\app.android.csproj
+projectfullpath=c:\users\rajad\onedrive\desktop\app\app\app.android\app.android.csproj
