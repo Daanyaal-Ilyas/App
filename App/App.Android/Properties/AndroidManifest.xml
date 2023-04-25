@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.app">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="33" />
-	<application android:label="App.Android" android:theme="@style/MainTheme" android:foregroundServiceType="dataSync"></application>
+	<application android:label="App.Android" android:theme="@style/MainTheme" android:foregroundServiceType="dataSync">
+		<activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTask">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="myapp" android:host="post" />
+			</intent-filter>
+		</activity>
+	</application>
 	<uses-permission android:name="android.permission.CAMERA" />
 	<uses-permission android:name="android.permission.REQUEST_FLAG_MUTABLE_OR_IMMUTABLE" />
 	<uses-permission android:name="android.permission.INTERNET" />

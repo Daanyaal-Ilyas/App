@@ -28,6 +28,13 @@ namespace App.Droid
         protected override void OnNewIntent(Intent intent)
         {
             CreateNotificationFromIntent(intent);
+            base.OnNewIntent(intent);
+
+            if (intent.Action == Intent.ActionView && intent.Data != null)
+            {
+                string postId = intent.Data.LastPathSegment;
+                // Navigate to the post page using the postId
+            }
         }
 
         void CreateNotificationFromIntent(Intent intent)
@@ -42,6 +49,8 @@ namespace App.Droid
                 DependencyService.Get<INotifificationManager>().ReceiveNotification(title, message);
             }
         }
+
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);

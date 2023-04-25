@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +13,6 @@ namespace App.Pages
     {
         private User users;
         private Post post;
-        private User currentUser;
 
         public ViewPost(int postId, User user)
         {
@@ -64,6 +65,17 @@ namespace App.Pages
         {
             await Navigation.PushAsync(new EditPost(users,post));
         }
+        private async void SharePostButton_Clicked(object sender, EventArgs e)
+        {
+            Uri postUrl = new Uri($"http://myapp.com/post/{post.Id}");
+
+            await Share.RequestAsync(new ShareTextRequest
+            {
+                Uri = postUrl.AbsoluteUri,
+                Title = "Share Post"
+            });
+        }
+
 
         private void LoadComments(int postId)
         {

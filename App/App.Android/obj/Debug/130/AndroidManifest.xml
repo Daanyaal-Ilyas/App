@@ -15,7 +15,15 @@
   <uses-permission android:name="android.permission.WAKE_LOCK" />
   <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
   <uses-permission android:name="android.permission.VIBRATE" />
-  <application android:label="App.Android" android:theme="@style/MainTheme" android:foregroundServiceType="dataSync" android:name="android.app.Application" android:allowBackup="true" android:icon="@mipmap/icon" android:debuggable="true" android:extractNativeLibs="true">
+  <application android:label="App.Android" android:theme="@style/MainTheme" android:foregroundServiceType="dataSync" android:name="android.app.Application" android:allowBackup="true" android:debuggable="true" android:extractNativeLibs="true">
+    <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTask">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="myapp" android:host="post" />
+      </intent-filter>
+    </activity>
     <activity android:configChanges="orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:icon="@mipmap/icon" android:label="App" android:theme="@style/MainTheme" android:name="crc64a17eccbbc6018201.MainActivity" android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
