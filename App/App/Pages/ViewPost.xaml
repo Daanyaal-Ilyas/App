@@ -14,8 +14,9 @@
                 <Image x:Name="PostImage" Margin="0,10,0,0" />
                 <Label x:Name="PostAuthor" Margin="0,10,0,0" TextColor="{StaticResource SecondaryColor}" />
                 <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
-                    <Label x:Name="TotalLikesLabel" TextColor="{StaticResource SecondaryColor}" />
-                    <Button Text="Like" Clicked="LikeButton_Clicked" x:Name="LikeButton"  HorizontalOptions="EndAndExpand" BackgroundColor="{StaticResource AccentColor}" TextColor="Black" />
+                    <Label x:Name="TotalLikesLabel" TextColor="{StaticResource SecondaryColor}" HorizontalOptions="StartAndExpand"/>
+                    <Button x:Name="EditPostButton" Text="Edit Post" Clicked="EditPostButton_Clicked" BackgroundColor="{StaticResource AccentColor}" TextColor="Black" />
+                    <Button Text="Like" Clicked="LikeButton_Clicked" x:Name="LikeButton" BackgroundColor="{StaticResource AccentColor}" TextColor="Black" />
                 </StackLayout>
                 <BoxView Color="{StaticResource SecondaryColor}" HeightRequest="1" Margin="0,10,0,10" />
                 <Entry x:Name="NewCommentEntry" Placeholder="Write a comment..." Margin="0,10,0,0" PlaceholderColor="{StaticResource SecondaryColor}" TextColor="{StaticResource PrimaryColor}" />

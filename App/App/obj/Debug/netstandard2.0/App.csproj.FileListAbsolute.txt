@@ -38,3 +38,4 @@ C:\Users\rajad\Downloads\App-main\App-main\App-main\App\App\obj\Debug\netstandar
 C:\Users\rajad\Downloads\App-main\App-main\App-main\App\App\obj\Debug\netstandard2.0\refint\App.dll
 C:\Users\rajad\Downloads\App-main\App-main\App-main\App\App\obj\Debug\netstandard2.0\App.pdb
 C:\Users\rajad\Downloads\App-main\App-main\App-main\App\App\obj\Debug\netstandard2.0\ref\App.dll
+C:\Users\rajad\OneDrive\Desktop\App\App\App\obj\Debug\netstandard2.0\Pages\EditPost.xaml.g.cs

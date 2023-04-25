@@ -1,6 +1,6 @@
 ﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App.Pages.CreatePost"
+             x:Class="App.Pages.EditPost"
              BackgroundColor="{StaticResource PrimaryColor}">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -22,7 +22,7 @@
                 <Label Text="Upload Image" TextColor="White" FontSize="Large" FontAttributes="Bold" />
                 <Button Text="Choose Image" Clicked="ChooseImageButton_Clicked" BackgroundColor="#212121" TextColor="White" FontSize="16" FontAttributes="Bold" />
                 <Image x:Name="PostImage" Aspect="AspectFill" HeightRequest="200" />
-                <Button Text="Create Post" Clicked="CreatePostButton_Clicked" BackgroundColor="#212121" TextColor="White" FontSize="16" FontAttributes="Bold" />
+                <Button Text="Update Post" Clicked="UpdatePostButton_Clicked" BackgroundColor="#212121" TextColor="White" FontSize="16" FontAttributes="Bold" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

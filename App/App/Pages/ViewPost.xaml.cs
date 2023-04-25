@@ -11,6 +11,7 @@ namespace App.Pages
     {
         private User users;
         private Post post;
+        private User currentUser;
 
         public ViewPost(int postId, User user)
         {
@@ -19,10 +20,11 @@ namespace App.Pages
             LoadPost(postId);
             LoadComments(postId);
 
-            // If the current user is not the author of the post, hide the delete button
+            // If the current user is not the author of the post, hide the delete and edit button
             if (post.UserId != user.Id)
             {
                 DeletePostButton.IsVisible = false;
+                EditPostButton.IsVisible = false;
             }
         }
 
@@ -56,6 +58,11 @@ namespace App.Pages
                     PostImage.Source = ImageSource.FromStream(() => new MemoryStream(post.ImageData));
                 }
             }
+        }
+
+        private async void EditPostButton_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new EditPost(users,post));
         }
 
         private void LoadComments(int postId)
