@@ -43,5 +43,12 @@ public class UserRepo
     {
         return connections.Delete(user);
     }
+
+    public User GetLoggedInUser(SQLiteConnection connection)
+    {
+        return connection.Table<User>().FirstOrDefault(u => u.IsLoggedIn);
+    }
+
+
 }
 
