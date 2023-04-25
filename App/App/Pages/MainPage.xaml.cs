@@ -54,9 +54,6 @@ namespace App.Pages
             }
         }
 
-
-
-
         private void SearchButton_Clicked(object sender, EventArgs e)
         {
             LoadPosts(SearchText);
