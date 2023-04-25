@@ -47,9 +47,14 @@ namespace App.Pages
                     postWithAuthors = postWithAuthors.Where(p => p.Post.Title.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 || p.Post.Description.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
                 }
 
+                // sort the posts by the number of likes in descending order
+                postWithAuthors = postWithAuthors.OrderByDescending(p => db.LikeRepo.GetLikesByPostId(p.Post.Id).Count).ToList();
+
                 PostsListView.ItemsSource = postWithAuthors;
             }
         }
+
+
 
 
         private void SearchButton_Clicked(object sender, EventArgs e)

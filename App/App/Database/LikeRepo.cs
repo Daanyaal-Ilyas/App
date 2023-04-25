@@ -16,6 +16,10 @@ public class LikeRepo
     {
         return databases.Connection.Table<Like>().Count(l => l.PostId == postId);
     }
+    public List<Like> GetLikesByPostId(int postId)
+    {
+        return databases.Connection.Table<Like>().Where(l => l.PostId == postId).ToList();
+    }
 
     public Like GetLikeByUserIdAndPostId(int userId, int postId)
     {
