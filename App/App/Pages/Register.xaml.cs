@@ -30,7 +30,7 @@ namespace App.Pages
             }
 
             // Check if the username is already taken
-            using (var db = new AppDatabase())
+            using (var db = new Databases())
             {
                 var existingUser = db.UserRepo.GetUserByUsernameAndPassword(UsernameEntry.Text, PasswordEntry.Text);
                 if (existingUser != null)
@@ -49,7 +49,7 @@ namespace App.Pages
                 Password = PasswordEntry.Text
             };
 
-            using (var db = new AppDatabase())
+            using (var db = new Databases())
             {
                 db.UserRepo.CreateUser(newUser);
             }

@@ -27,7 +27,7 @@ namespace App.Pages
 
         private void LoadPosts(string searchText = null)
         {
-            using (var db = new AppDatabase())
+            using (var db = new Databases())
             {
                 var posts = db.PostRepo.GetAllPosts();
                 List<PostWithAuthor> postWithAuthors = new List<PostWithAuthor>();

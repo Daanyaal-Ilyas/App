@@ -28,7 +28,7 @@ namespace App.Pages
 
         private void LoadPost(int postId)
         {
-            using (var db = new AppDatabase())
+            using (var db = new Databases())
             {
                 post = db.PostRepo.GetPostById(postId);
                 User postAuthor = db.UserRepo.GetUserById(post.UserId);
@@ -60,7 +60,7 @@ namespace App.Pages
 
         private void LoadComments(int postId)
         {
-            using (var db = new AppDatabase())
+            using (var db = new Databases())
             {
                 var comments = db.CommentsRepo.GetCommentsByPostId(postId);
                 List<CommentWithAuthor> commentsWithAuthors = new List<CommentWithAuthor>();
@@ -87,7 +87,7 @@ namespace App.Pages
 
         private async void AddCommentButton_Clicked(object sender, EventArgs e)
         {
-            using (var db = new AppDatabase())
+            using (var db = new Databases())
             {
                 var newComment = new Comment
                 {
@@ -110,7 +110,7 @@ namespace App.Pages
 
             if (answer)
             {
-                using (var db = new AppDatabase())
+                using (var db = new Databases())
                 {
                     // Delete post
                     db.PostRepo.DeletePost(post);
@@ -129,7 +129,7 @@ namespace App.Pages
 
         private async void LikeButton_Clicked(object sender, EventArgs e)
         {
-            using (var db = new AppDatabase())
+            using (var db = new Databases())
             {
                 var existingLike = db.LikeRepo.GetLikeByUserIdAndPostId(users.Id, post.Id);
 

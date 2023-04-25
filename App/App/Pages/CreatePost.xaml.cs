@@ -84,7 +84,7 @@ namespace App.Pages
                 UserId = users.Id,
                 ImageData = imageData
             };
-            using (var db = new AppDatabase())
+            using (var db = new Databases())
             {
                 db.PostRepo.CreatePost(newPost);
             }

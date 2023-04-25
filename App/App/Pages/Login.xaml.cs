@@ -15,7 +15,7 @@ namespace App.Pages
 
         private async void LoginButton_Clicked(object sender, EventArgs e)
         {
-            using (var db = new AppDatabase())
+            using (var db = new Databases())
             {
                 var user = db.UserRepo.GetUserByUsernameAndPassword(UsernameEntry.Text, PasswordEntry.Text);
                 if (user != null)

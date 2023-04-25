@@ -27,7 +27,7 @@ namespace App.Pages
 
         private void LoadUserPosts()
         {
-            using (var db = new AppDatabase())
+            using (var db = new Databases())
             {
                 var userPosts = db.PostRepo.GetAllPosts().Where(p => p.UserId == currentUser.Id).ToList();
                 PostsListView.ItemsSource = userPosts;

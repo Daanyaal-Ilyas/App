@@ -12,7 +12,7 @@ namespace App
         {
             InitializeComponent();
 
-            var dbContext = new AppDatabase();
+            var db = new Databases();
 
             MainPage = new NavigationPage(new Login());
         }
